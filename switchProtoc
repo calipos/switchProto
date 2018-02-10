@@ -1,0 +1,26 @@
+v=$(protoc --version | awk '{print $2}')
+echo $v
+if [ "$v" = "..." ]; then
+    echo "this current protoc = ..."
+elif [ "$v" = "2.5.0" ];then
+    echo "this current protoc = 2.5.0"
+    cd
+    cd git/protobuf-2.5.0/
+    sudo make uninstall > /dev/null
+    cd ../protobuf/
+    sudo make install > /dev/null
+    sudo ldconfig
+    echo "~~~~~~~~~~~~~~~~~~~~ 2.5.0 has been checked into 3.5.1 ~~~~~~~~~~~~~~~~"
+elif [ "$v" = "3.5.1" ]; then
+    echo "this current protoc = 3.5.1"
+    cd
+    cd git/protobuf/
+    sudo make uninstall > /dev/null
+    cd ../protobuf-2.5.0/
+    sudo make install > /dev/null
+    sudo ldconfig
+    echo "~~~~~~~~~~~~~~~~~~~ 3.5.1 has been checked into 2.5.0 ~~~~~~~~~~~~~~~~~"
+else  
+    echo "none"
+    exit
+fi
